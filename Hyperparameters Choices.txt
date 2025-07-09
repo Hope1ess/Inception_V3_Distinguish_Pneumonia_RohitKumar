@@ -1,0 +1,45 @@
+Short notes on key Hyperparameters.
+
+1. Optimizer (Adam):- 
+	- An algorithms that adjusts how much the model learns from each batch.
+	- It adapts the learning rate automatically and works well in most cases.
+
+2. Learning Rate (0.0001):-
+	- Controls how big the steps are when updating model.
+	- Smaller values (like 0.0001, 0.001) mean slower but more stable learning.
+
+3. Learning Rate Scheduler (Exponential Decay):-
+	- Gradually lowers the learning rate during training to fine-tune better.
+	- Helps the model settel into a better final solution.
+
+4. Batch Size (32):-
+	-Number of training samples processed at once.
+	- A batch size of 32 balances speed and memory usage well.
+
+5. Epochs and Early Stopping:-
+	- Epoch: One complete pass through all training data.
+	- Early Stopping: stops training if the model stops improving for 20 epoches-prevent overfitting.
+
+6. Dropout (0.5):-
+	- Randomly turns off 50% of the neurons in certain layers during training.
+	- This prevents the model from relying too heavily on any one feature-helps generalize better.
+
+7. Regularization (L1 & L2):-
+	- Adds a small penalty to large weihts to keep the model simpler and more robust.
+	   - L1: Encourages some wieghts to become zero (sparse model).
+	   - L2: Encourages all weights to stay small.
+
+8. Data Augmentation:-
+	- Slightly changes training images (eg. rotate, shift, zoom, flip) to make the model more robust.
+	- Especially used when the dataset is small or unbalanced.
+
+9. Image Resizing and Channel Expansion:-
+	- Original images are 28x28 and grayscale (1 channel).
+	- InceptionV3 expects 75x75 RGB images, so we:
+		- Resize them to 75x75
+		- Duplicate the grayscale channel 3 times to stimulate an RGB image.
+
+10. Evaluation Metrics:-
+	- Accuracy: How often the model is correct.
+	- AUC (Area under curve): How well the model separates the two classes.
+	- F1 Score: Combines precision and recall - usefull when both false positives and false negatives are important ( as in medical applications).
