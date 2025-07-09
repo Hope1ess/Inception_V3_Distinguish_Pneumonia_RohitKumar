@@ -1,0 +1,31 @@
+Q1. Why and what layers of the model did you fine-tune?
+A.I used Transfer Learning with the InceptionV3 model that was already trained on the ImageNet dataset. Since the PneumoniaMNIST dataset has grayscale medical images and is much smaller than ImageNet, I needed to reuse useful knowledge from the pre-trained model while also adjusting it to work well with the new data.
+What I fine-tuned:
+-I unlocked (unfroze) only the deeper layers of the model—those whose names start with 'conv3', 'conv4', or 'conv5'.
+Why I did this:
+-The early layers of InceptionV3 learn very general patterns (like edges or basic shapes), which work well for most images, including medical scans. So, I left those layers frozen.
+-The deeper layers learn more specific details. By fine-tuning them, the model could better recognize patterns unique to pneumonia, like lung textures or opacities.
+-This approach helps the model adjust to the medical data without overfitting and also keeps training time faster.
+
+Q2. Describe how did you split your data for fine-tuning the model.
+A.To fine-tune the InceptionV3 model, I used a version of the PneumoniaMNIST dataset that was already divided into three parts: training, validation, and test sets.
+-Training set: This was used to teach the model. I also added more images for the smaller class using techniques like rotation and flipping to fix the class imbalance.
+-Validation set: This helped me check how well the model was learning during training. It was used to stop training at the right time and avoid overfitting.
+-Test set: This was used only at the end, after training, to see how well the model performs on completely new data.
+
+Q3. How your selected evaluation metric is relevant to the clinical use case?
+A.When using AI to help diagnose pneumonia from medical images, choosing the right evaluation metrics is very important. Wrong predictions can seriously affect patient health. Here’s why I chose these metrics:
+- Accuracy: Accuracy shows how often the model is right overall. But in medical cases with uneven data (like more healthy cases than pneumonia), it can be misleading. For example, missing a real pneumonia case is worse than wrongly flagging a healthy one. So, accuracy should be looked at along with other metrics.
+- AUC (Area Under the Curve): AUC tells us how well the model can tell the difference between pneumonia and non-pneumonia cases. A high AUC (like 0.9180) means the model is good at recognizing who needs medical care — which is very important in healthcare.
+- F1 Score: F1 is key in this case because it balances, False negatives, and False positives. A good F1 score means the model handles both types of errors well.
+
+
+
+Q4. Take one example of mis-classified case in your test set. Explain why the model failed and what you would try next?
+A.Example of a Wrong Prediction: At position 1 in the test data, the actual label was 0 (no pneumonia), but the model predicted 1 (pneumonia) with very high confidence (99.43%).
+- Why the Model Got It Wrong: The model may have mistaken some patterns in the healthy lung image as signs of pneumonia. This could be because, there weren’t enough similar healthy examples in the training data. The image may have had noise or unclear patterns that confused the model.
+- What I Can Do to Improve: Add more varied healthy images to the dataset, improve image preprocessing to clean up noise, adjust the model’s complexity or use regularization to reduce overfitting, lower the learning rate, so the model learns more carefully and avoids making overly confident mistakes.
+
+
+Q5. In one sentence (10-15 words), tell a clinician why your model is worth their attention .
+A.The model finds pneumonia accurately while minimizing missed cases and false alarms for safer diagnosis.
